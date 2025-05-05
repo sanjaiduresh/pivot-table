@@ -1,0 +1,24 @@
+.file-uploader {
+    margin-bottom: 1rem;
+    margin-left: 1.5rem;
+  }
+  
+  .upload-label {
+    display: inline-block;
+    background-color: #107C41;
+    color: white;
+    font-weight: 600;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .upload-label:hover {
+    background-color: #0e6f3a;
+  }
+  
+  .file-input {
+    display: none;
+  }
+  
