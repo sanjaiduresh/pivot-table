@@ -1,10 +1,18 @@
 .file-uploader {
     margin-bottom: 1rem;
-    margin-left: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    justify-self: center;
+  }
+  .file-upload-title{
+    color :#0e6f3a;
+    font-weight: 600;
+
   }
   
   .upload-label {
-    display: inline-block;
+    display: flex;
     background-color: #107C41;
     color: white;
     font-weight: 600;

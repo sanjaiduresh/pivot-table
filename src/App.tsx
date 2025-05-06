@@ -33,6 +33,7 @@ function App() {
 
   return (
     <div className="app-container">
+      
       <FileUploader onDataParsed={handleDataParsed} />
 
       {fields.length > 0 && (

@@ -14,6 +14,9 @@ export default function FileUploader({ onDataParsed }) {
 
   return (
 <div className="file-uploader">
+      <div className="file-upload-title">
+        Upload a CSV/Excel File
+      </div>
       <label className="upload-label">
         Import File
         <input
