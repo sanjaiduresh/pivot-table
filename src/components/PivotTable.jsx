@@ -1,22 +1,17 @@
 import React from "react";
 import { generatePivotData } from "../utils/pivotData";
+import "../styles/pivotTable.css";
 
 function buildColumnTree(columns, values) {
   const tree = {};
-
   columns.forEach(colKey => {
-   
     const parts = colKey.split(" | ");
     let current = tree;
-    
-
     parts.forEach((part, index) => {
-      
       if (!current[part]) {
         current[part] = {};
       }
       current = current[part];
-
       if (index === parts.length - 1) {
         values.forEach(val => {
           current[val] = null;
@@ -24,7 +19,6 @@ function buildColumnTree(columns, values) {
       }
     });
   });
-
   return tree;
 }
 
@@ -35,17 +29,14 @@ function getMaxDepth(tree) {
 
 function renderHeaderRows(tree, depth, values, aggregations) {
   const rows = Array.from({ length: depth }, () => []);
-
-  function traverse(node, level) { //traverse(product,1)
+  function traverse(node, level) {
     for (const label in node) {
       const child = node[label];
-
       if (child && typeof child === "object" && Object.keys(child).length > 0) {
         const colSpan = countLeafNodes(child);
         rows[level].push({ label, colSpan, rowSpan: 1 });
         traverse(child, level + 1);
       } else {
-        // leaf nodes (values like Units Sold, Price etc.)
         if (values.length === 0) {
           rows[level].push({ label: label, colSpan: 0, rowSpan: depth - level });
         } else {
@@ -55,7 +46,6 @@ function renderHeaderRows(tree, depth, values, aggregations) {
       }
     }
   }
-
   traverse(tree, 0);
   return rows;
 }
@@ -70,23 +60,23 @@ function countLeafNodes(node) {
 }
 
 export default function PivotTable({ data, rows, columns, values, aggregations }) {
-  if (!data.length) return <div>No data to display</div>;
+  if (!data.length) return <div className="no-data">No data to display</div>;
 
   if (rows.length === 0 && columns.length === 0) {
     return (
-      <table className="table-auto border-collapse border border-gray-300 text-sm" >
-        <thead className="bg-[#c0e4f59a]">
+      <table className="pivot-table">
+        <thead className="pivot-header">
           <tr>
             {Object.keys(data[0]).map((key) => (
-              <th key={key} className="border p-2">{key}</th>
+              <th key={key} className="pivot-th">{key}</th>
             ))}
           </tr>
         </thead>
-        <tbody className="divide-y divide-gray-200">
+        <tbody className="pivot-body">
           {data.map((row, idx) => (
-            <tr key={idx} className={`${idx % 2 === 0 ? 'bg-white' : 'bg-gray-50'}`}>
+            <tr key={idx} className={idx % 2 === 0 ? 'pivot-tr-even' : 'pivot-tr-odd'}>
               {Object.keys(row).map((key, i) => (
-                <td key={i} className="border p-2">{String(row[key])}</td>
+                <td key={i} className="pivot-td">{String(row[key])}</td>
               ))}
             </tr>
           ))}
@@ -108,24 +98,18 @@ export default function PivotTable({ data, rows, columns, values, aggregations }
   const headerRows = renderHeaderRows(columnTree, maxDepth, values, aggregations);
 
   return (
-    <div className="overflow-auto" id="scroll">
-      <table className="table-auto w-full border-collapse border border-gray-300 text-sm" >
-        <thead className="bg-[#c0e4f59a]">
+    <div className="pivot-container">
+      <table className="pivot-table">
+        <thead className="pivot-header">
           {headerRows.map((headerRow, rowIdx) => (
             <tr key={rowIdx}>
               {rowIdx === 0 && rows.map((r, idx) => (
-                <th
-                  key={"row_" + idx}
-                  className="border p-2"
-                  rowSpan={maxDepth}
-                >
-                  {r}
-                </th>
+                <th key={"row_" + idx} className="pivot-th" rowSpan={maxDepth}>{r}</th>
               ))}
               {headerRow.map((header, idx) => (
                 <th
                   key={`header_${rowIdx}_${idx}`}
-                  className="border p-2"
+                  className="pivot-th"
                   colSpan={header.colSpan}
                   rowSpan={header.rowSpan}
                 >
@@ -134,16 +118,10 @@ export default function PivotTable({ data, rows, columns, values, aggregations }
               ))}
               {rowIdx === 0 && values.length > 0 && (
                 values.map((val, valIdx) => {
-                  const agg = (aggregations[val] || 'sum');
-                  const aggLabel =
-                    agg === 'sum' ? 'Sum'
-                    : agg === 'avg' ? 'Avg'
-                    : agg === 'min' ? 'Min'
-                    : agg === 'max' ? 'Max'
-                    : agg === 'count' ? 'Count'
-                    : agg;
+                  const agg = aggregations[val] || 'sum';
+                  const aggLabel = agg === 'sum' ? 'Sum' : agg === 'avg' ? 'Avg' : agg === 'min' ? 'Min' : agg === 'max' ? 'Max' : agg === 'count' ? 'Count' : agg;
                   return (
-                    <th key={`rowtotal_header_${valIdx}`} rowSpan={maxDepth} className="border p-2 font-bold text-gray-700">
+                    <th key={`rowtotal_header_${valIdx}`} rowSpan={maxDepth} className="pivot-th pivot-bold">
                       {`Total ${aggLabel} of ${val}`}
                     </th>
                   );
@@ -152,24 +130,24 @@ export default function PivotTable({ data, rows, columns, values, aggregations }
             </tr>
           ))}
         </thead>
-        <tbody className="divide-y divide-gray-200">
+        <tbody className="pivot-body">
           {pivotRows.map((rowKey, rowIdx) => {
             const rowParts = rowKey.split(" | ");
             return (
-              <tr key={rowIdx} className={`${rowIdx % 2 === 0 ? 'bg-white' : 'bg-gray-50'}`}>
+              <tr key={rowIdx} className={rowIdx % 2 === 0 ? 'pivot-tr-even' : 'pivot-tr-odd'}>
                 {rowParts.map((part, idx) => (
-                  <td key={`rowpart_${rowIdx}_${idx}`} className="border p-2">{part}</td>
+                  <td key={`rowpart_${rowIdx}_${idx}`} className="pivot-td">{part}</td>
                 ))}
                 {pivotMatrix[rowIdx].map((cell, cellIdx) => (
                   values.map((val, valIdx) => (
-                    <td key={`cell_${rowIdx}_${cellIdx}_${valIdx}`} className="border p-2">
-                      {cell[val] != 0 ? cell[val] : null}
+                    <td key={`cell_${rowIdx}_${cellIdx}_${valIdx}`} className="pivot-td">
+                      {cell[val] !== 0 ? cell[val] : null}
                     </td>
                   ))
                 ))}
                 {values.length > 0 && (
                   values.map((val, valIdx) => (
-                    <td key={`rowtotal_${rowIdx}_${valIdx}`} className="border p-2 font-bold text-gray-700">
+                    <td key={`rowtotal_${rowIdx}_${valIdx}`} className="pivot-td pivot-bold">
                       {pivotMatrix[rowIdx].reduce((acc, cell) => acc + Number(cell[val] || 0), 0)}
                     </td>
                   ))
@@ -179,18 +157,18 @@ export default function PivotTable({ data, rows, columns, values, aggregations }
           })}
         </tbody>
         {values.length > 0 && (
-          <tfoot className="text-gray-700 font-semibold">
+          <tfoot className="pivot-footer">
             <tr>
-              <td className="border p-2 font-bold" colSpan={rows.length}>Column Totals</td>
+              <td className="pivot-td pivot-bold" colSpan={rows.length}>Column Totals</td>
               {columnTotals.map((total, idx) => (
                 values.map((val, valIdx) => (
-                  <td key={`${idx}_${valIdx}`} className="border p-2 font-bold">
+                  <td key={`${idx}_${valIdx}`} className="pivot-td pivot-bold">
                     {total[val]}
                   </td>
                 ))
               ))}
               {values.map((val, valIdx) => (
-                <td key={`grandtotal_${valIdx}`} className="border p-2 font-bold">
+                <td key={`grandtotal_${valIdx}`} className="pivot-td pivot-bold">
                   {Number(columnTotals.reduce((acc, total) => acc + Number(total[val] || 0), 0)).toFixed(2)}
                 </td>
               ))}

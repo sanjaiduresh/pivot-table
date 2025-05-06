@@ -1,0 +1,128 @@
+.field-selector-container {
+    font-family: Arial, sans-serif;
+  }
+  
+  .field-selector-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+  }
+  
+  .header-title {
+    font-size: 20px;
+    font-weight: bold;
+  }
+  
+  .reset-btn {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .available-fields {
+    max-height: 200px;
+    overflow-y: auto;
+    border: 1px solid #ccc;
+    padding: 8px;
+    margin-bottom: 16px;
+    background-color: #f9f9f9;
+  }
+  
+  .field-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #fff;
+    padding: 8px;
+    margin-bottom: 4px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    cursor: grab;
+  }
+  
+  .field-item.dragging {
+    opacity: 0.5;
+  }
+  
+  .field-item-left {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  
+  .summation {
+    font-weight: bold;
+    font-size: 16px;
+  }
+  
+  .date-hierarchy {
+    font-style: italic;
+    color: #444;
+  }
+  
+  .field-item-right {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  
+  .aggregation-select {
+    padding: 4px 6px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #f2f2f2;
+  }
+  
+  .remove-btn {
+    background-color: red;
+    color: white;
+    font-weight: bold;
+    border: none;
+    border-radius: 4px;
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+  }
+  
+  .dropzones {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  
+  .dropzones-top {
+    display: flex;
+    gap: 16px;
+  }
+  
+  .dropzone-container {
+    flex: 1;
+  }
+  
+  .dropzone-header {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-weight: bold;
+    margin-bottom: 4px;
+  }
+  
+  .dropzone-box {
+    min-height: 80px;
+    background-color: #f4f4f4;
+    border: 2px dashed #bbb;
+    padding: 8px;
+    border-radius: 6px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .dropzone-box.over {
+    background-color: #e0f7ff;
+  }
+  
+  .dropzone-scroll {
+    max-height: 150px;
+    overflow-y: auto;
+  }
+  

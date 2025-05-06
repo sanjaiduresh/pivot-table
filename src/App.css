@@ -1,21 +1,21 @@
 .app-container {
   padding: 1rem;
+  box-sizing: border-box;
+
 }
 
 .layout {
   display: flex;
-  justify-content: space-between;
-  gap: 1.5rem;
+  flex-direction: row;
+  gap:1.5rem;
   padding: 0 1.5rem;
 }
 
 .pivot-table-container {
   width: 70%;
   max-height: 30rem; /* approx 120 * 4px */
-  overflow: auto;
 }
 
 .field-selector-container {
   max-height: 30rem;
-  overflow-y: auto;
 }

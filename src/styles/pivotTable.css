@@ -1,0 +1,39 @@
+.pivot-container {
+    overflow: auto;
+    width: 50%;
+
+  }
+  .pivot-table {
+    border-collapse: collapse;
+    border: 1px solid #ccc;
+    font-size: 0.875rem;
+  }
+  .pivot-th, .pivot-td {
+    border: 1px solid #ccc;
+    padding: 0.5rem;
+  }
+  .pivot-header {
+    background-color: #c0e4f59a;
+  }
+  .pivot-body {
+    border-top: 1px solid #ccc;
+  }
+  .pivot-tr-even {
+    background-color: white;
+  }
+  .pivot-tr-odd {
+    background-color: #f9fafb;
+  }
+  .pivot-bold {
+    font-weight: bold;
+    color: #374151;
+  }
+  .pivot-footer {
+    font-weight: 600;
+    color: #374151;
+  }
+  .no-data {
+    padding: 1rem;
+    font-size: 1rem;
+  }
+  
