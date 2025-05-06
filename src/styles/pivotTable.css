@@ -12,6 +12,7 @@
     border: 1px solid #ccc;
     padding: 0.5rem;
   }
+
   .pivot-header {
     background-color: #c0e4f59a;
   }
@@ -21,8 +22,14 @@
   .pivot-tr-even {
     background-color: white;
   }
+  .pivot-tr-even .pivot-td:hover{
+    background-color: #f9fafbc3;
+  }
   .pivot-tr-odd {
-    background-color: #f9fafb;
+    background-color: #f9fafbc3;
+  }
+  .pivot-tr-odd .pivot-td:hover{
+    background-color: white;
   }
   .pivot-bold {
     font-weight: bold;

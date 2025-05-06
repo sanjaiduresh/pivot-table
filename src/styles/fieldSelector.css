@@ -116,6 +116,10 @@
     border-radius: 6px;
     transition: background-color 0.3s ease;
   }
+  .dropzone-box:hover{
+    border: 2px dashed #1bd46e;
+
+  }
   
   .dropzone-box.over {
     background-color: #e0f7ff;
